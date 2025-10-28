@@ -7,6 +7,11 @@ const startButton = document.getElementById("startButton");
 // Local score variable
 let score = 0;
 
+// Sound effect for hitting a mole
+const popSound = new Audio("sounds/pop.mp3");
+let timeLeft = 15;
+let timerInterval = null;
+
 // Initialize game board
 function initializeGame() {
   // Loop through each hole and add a mole
@@ -20,9 +25,19 @@ function initializeGame() {
     const rightEye = document.createElement("div");
     rightEye.className = "eye right-eye";
 
+    // Create pupils
+    const leftPupil = document.createElement("div");
+    leftPupil.className = "pupil left-pupil";
+    const rightPupil = document.createElement("div");
+    rightPupil.className = "pupil right-pupil";
+
     // Create nose
     const nose = document.createElement("div");
     nose.className = "nose";
+
+    // Create mouth
+    const mouth = document.createElement("div");
+    mouth.className = "mouth";
 
     // Create ears
     const leftEar = document.createElement("div");
@@ -35,7 +50,10 @@ function initializeGame() {
     mole.appendChild(rightEar);
     mole.appendChild(leftEye);
     mole.appendChild(rightEye);
+    mole.appendChild(leftPupil);
+    mole.appendChild(rightPupil);
     mole.appendChild(nose);
+    mole.appendChild(mouth);
 
     // Add a click event listener to the mole
     mole.addEventListener("click", function () {
@@ -44,6 +62,8 @@ function initializeGame() {
         score++;
         scoreDisplay.textContent = score;
         holes[i].classList.remove("up");
+        popSound.currentTime = 0;
+        popSound.play();
       }
     });
 
@@ -53,6 +73,8 @@ function initializeGame() {
         score++;
         scoreDisplay.textContent = score;
         holes[i].classList.remove("up");
+        popSound.currentTime = 0;
+        popSound.play();
         event.preventDefault();
       }
     });
@@ -67,6 +89,8 @@ function initializeGame() {
         score++;
         scoreDisplay.textContent = score;
         holes[i].classList.remove("up");
+        popSound.currentTime = 0;
+        popSound.play();
         event.preventDefault();
       }
     });
@@ -74,11 +98,32 @@ function initializeGame() {
   }
 }
 
+// Timer and message elements
+const timeLeftDisplay = document.getElementById("timeLeft");
+const messageDisplay = document.getElementById("message");
+
 // Start the game when the button is clicked
 startButton.addEventListener("click", function () {
-  // Reset score at the start of the game
+  // Reset score and timer at the start of the game
   score = 0;
   scoreDisplay.textContent = score;
+  timeLeft = 15;
+  timeLeftDisplay.textContent = timeLeft;
+  messageDisplay.textContent = "";
+
+  // Start timer countdown
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(function () {
+    timeLeft--;
+    timeLeftDisplay.textContent = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      messageDisplay.textContent = "Time's up!";
+    }
+  }, 1000);
+
   if (typeof startGame === "function") {
     startGame();
   }
