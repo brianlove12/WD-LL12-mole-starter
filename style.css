@@ -31,6 +31,54 @@ body {
   width: 100%;
   height: 100%;
   transition: top 0.1s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ears */
+.ear {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #8b4513;
+  border-radius: 50%;
+  top: -15px;
+}
+.left-ear {
+  left: 15px;
+}
+.right-ear {
+  right: 15px;
+}
+
+/* Eyes */
+.eye {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  top: 40px;
+}
+.left-eye {
+  left: 35px;
+}
+.right-eye {
+  right: 35px;
+}
+
+/* Nose */
+.nose {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: pink;
+  border-radius: 50%;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 2px solid #8b4513;
 }
 
 .hole.up .mole {
